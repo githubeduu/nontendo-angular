@@ -1,12 +1,24 @@
-import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { AfterViewInit, Component } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-category-estrategia',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, RouterModule],
   templateUrl: './category-estrategia.component.html',
   styleUrl: './category-estrategia.component.css'
 })
-export class CategoryEstrategiaComponent {
-
+export class CategoryEstrategiaComponent implements AfterViewInit {
+  showSubMenu: boolean = false;
+  
+  ngAfterViewInit(): void {}
+  
+  
+  toggleSubMenu(event: Event) {
+    event.preventDefault(); 
+    this.showSubMenu = !this.showSubMenu;
+  }
 }
+
+  

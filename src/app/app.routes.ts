@@ -7,7 +7,7 @@ import { CategoryFamiliarComponent } from './components/category-familiar/catego
 
 export const routes: Routes = [
     { path: '', redirectTo: '/index', pathMatch: 'full' },
-    { path: 'index', component: IndexComponent },
+    { path: 'index', component: IndexComponent }, 
     { path: 'categoryAventura', component: CategoryAventuraComponent },
     { path: 'categoryCooperativo', component: CategoryCooperativoComponent },
     { path: 'categoryEstrategia', component: CategoryEstrategiaComponent },

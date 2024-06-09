@@ -1,3 +1,4 @@
+// index.component.ts
 import { AfterViewInit, Component, ElementRef, Inject, PLATFORM_ID, Renderer2 } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -37,7 +38,8 @@ export class IndexComponent implements AfterViewInit {
     }
   }
 
-  toggleSubMenu() {
+  toggleSubMenu(event: Event) {
+    event.preventDefault();  // Prevents the default action of the anchor tag
     this.showSubMenu = !this.showSubMenu;
   }
 }
