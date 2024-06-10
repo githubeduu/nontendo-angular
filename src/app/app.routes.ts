@@ -4,6 +4,7 @@ import { CategoryAventuraComponent } from './components/category-aventura/catego
 import { CategoryCooperativoComponent } from './components/category-cooperativo/category-cooperativo.component';
 import { CategoryEstrategiaComponent } from './components/category-estrategia/category-estrategia.component';
 import { CategoryFamiliarComponent } from './components/category-familiar/category-familiar.component';
+import { CategoryRegistroComponent } from './components/category-registro/category-registro.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/index', pathMatch: 'full' },
@@ -11,5 +12,6 @@ export const routes: Routes = [
     { path: 'categoryAventura', component: CategoryAventuraComponent },
     { path: 'categoryCooperativo', component: CategoryCooperativoComponent },
     { path: 'categoryEstrategia', component: CategoryEstrategiaComponent },
-    { path: 'categoryFamiliar', component: CategoryFamiliarComponent }
+    { path: 'categoryFamiliar', component: CategoryFamiliarComponent },
+    { path: 'categoryRegistro', component: CategoryRegistroComponent }
 ];
