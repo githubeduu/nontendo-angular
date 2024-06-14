@@ -1,21 +1,20 @@
 <header>
   <nav class="navbar navbar-expand-sm navbar-light">
     <img src="assets/images/logo.png" alt="Logo Nontendo">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
-      aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" (click)="toggleSubMenu()">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <div class="collapse navbar-collapse" [ngClass]="{'show': showSubMenu}">
       <ul class="navbar-nav">
         <li class="nav-item active">
           <a class="nav-link" routerLink="/index">Inicio <span class="sr-only"></span></a>
         </li>
-        <li class="nav-item dropdown" [ngClass]="{'show': showSubMenu}">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
-            aria-haspopup="true" aria-expanded="showSubMenu" (click)="toggleSubMenu($event)">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
+             role="button" aria-haspopup="true" aria-expanded="false" (click)="toggleSubMenu()">
             Juegos de mesa
           </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" [ngClass]="{'show': showSubMenu}">
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             <a class="dropdown-item" [routerLink]="['/categoryAventura']">Aventura</a>
             <a class="dropdown-item" [routerLink]="['/categoryCooperativo']">Cooperativo</a>
             <a class="dropdown-item" [routerLink]="['/categoryEstrategia']">Estrategia</a>
@@ -29,53 +28,65 @@
     </div>
   </nav>
 </header>
-<main>           
-  <section id="register" class="container mt-3">        
-    <div class="col-md-6 px-5 d-flex flex-column align-items-center">     
-      <form class="col-4 text-center w-100 needs-validation" novalidate>
-         <div class="form-group form-floating mb-3">
-            <input type="email" class="form-control" id="email" placeholder="Enter email" required>
-            <label for="email">Email</label>
-            <div class="invalid-feedback">Por favor, introduce un email válido.</div>
-         </div>
-         <div class="form-group form-floating mb-3">
-            <input type="text" class="form-control" id="name" placeholder="Enter name" required>
+<main>
+  <section id="register" class="container mt-3">
+    <div class="row justify-content-center">
+      <div class="col-md-6 px-5">
+        <form [formGroup]="miFormulario" (ngSubmit)="submitForm()">
+          <div class="form-group form-floating mb-3" [ngClass]="{'focused': miFormulario.get('name')?.dirty || miFormulario.get('name')?.value}">
             <label for="name">Nombre completo</label>
-            <div class="invalid-feedback">Por favor, introduce tu nombre completo.</div>
-         </div>
-         <div class="form-group mb-3 position-relative">
-            <div class="input-group">
-               <div class="form-floating">
-                  <input type="password" class="form-control" id="pwd" placeholder="Enter password" required>
-                  <div class="invalid-feedback">La contraseña debe tener al menos 8 caracteres, incluyendo una
-                     mayúscula, una minúscula, un número y un carácter especial.</div>
-                  <label for="pwd">Contraseña</label>
-               </div>
+            <input type="text" class="form-control" id="name" formControlName="name">          
+            <div *ngIf="formSubmitted && miFormulario.get('name')?.hasError('required')" class="text-danger">
+              Por favor, introduce tu nombre completo.
             </div>
-         </div>
-         <div class="form-group mb-3 position-relative">
-            <div class="input-group">
-               <div class="form-floating">
-                  <input type="password" class="form-control" id="repeat-pwd" placeholder="Enter password"
-                     required>
-                  <div class="invalid-feedback">Las contraseñas no coinciden.</div>
-                  <label for="repeat-pwd">Repetir contraseña</label>
-               </div>
+          </div>
+          <div class="form-group form-floating mb-3" [ngClass]="{'focused': miFormulario.get('email')?.dirty || miFormulario.get('email')?.value}">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" formControlName="email">
+            <div *ngIf="formSubmitted && miFormulario.get('email')?.hasError('email')" class="text-danger">
+              Por favor, introduce un email válido.
             </div>
-         </div>
-         <div class="form-group form-floating mb-3">
-            <input type="text" class="form-control" id="username" placeholder="Enter username" required>
+          </div>
+          <div class="form-group mb-3 form-floating mb-3" [ngClass]="{'focused': miFormulario.get('password')?.dirty || miFormulario.get('password')?.value}">
+            <div class="input-group">
+              <div class="form-floating">
+                <label for="pwd">Contraseña</label>
+                <input type="password" class="form-control" id="pwd" formControlName="password" placeholder="Enter password">              
+                <div *ngIf="formSubmitted && (miFormulario.get('password')?.hasError('required') || miFormulario.get('password')?.hasError('minlength'))" class="text-danger">
+                  La contraseña debe tener al menos 8 caracteres.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group mb-3 position-relative" [ngClass]="{'focused': miFormulario.get('confirmPassword')?.dirty || miFormulario.get('confirmPassword')?.value}">
+            <div class="input-group">
+              <div class="form-floating">
+                <label for="repeat-pwd">Repetir contraseña</label>
+                <input type="password" class="form-control" id="repeat-pwd" formControlName="confirmPassword" placeholder="Enter password">              
+                <div *ngIf="formSubmitted && miFormulario.hasError('mismatch') && miFormulario.get('confirmPassword')?.touched" class="text-danger">
+                  Las contraseñas no coinciden.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group form-floating mb-3" [ngClass]="{'focused': miFormulario.get('username')?.dirty || miFormulario.get('username')?.value}">
+            <input type="text" class="form-control" id="username" formControlName="username">
             <label for="username">Nombre de usuario</label>
-            <div class="invalid-feedback">Por favor, introduce un nombre de usuario.</div>
-         </div>
-         <div class="form-group form-floating mb-3">
-            <input type="date" class="form-control" id="date" placeholder="Enter date" required>
+            <div *ngIf="formSubmitted && miFormulario.get('username')?.hasError('required')" class="text-danger">
+              Por favor, introduce un nombre de usuario.
+            </div>
+          </div>
+          <div class="form-group form-floating mb-3" [ngClass]="{'focused': miFormulario.get('birthdate')?.dirty || miFormulario.get('birthdate')?.value}">
+            <input type="date" class="form-control" id="date" formControlName="birthdate" placeholder="Enter date">
             <label for="date">Fecha de nacimiento</label>
-            <div class="invalid-feedback">Debes tener al menos 16 años para registrarte.</div>
-         </div>
-         <button type="submit" class="btn btn-submit btn-primary">Registrarse</button>
-      </form>     
-      <p class="mt-4">¿Tienes una cuenta? <a routerLink="/login" class="link-dark">Inicia sesión</a></p>
-   </div>
+            <div *ngIf="formSubmitted && (miFormulario.get('birthdate')?.hasError('required') || miFormulario.get('birthdate')?.hasError('minAge'))" class="text-danger">
+              Debes tener al menos 16 años para registrarte.
+            </div>
+          </div>
+          <button type="submit" class="btn btn-submit btn-primary w-100">Registrarse</button>
+        </form>
+        <p class="mt-4 text-center">¿Tienes una cuenta? <a routerLink="/login" class="link-dark">Inicia sesión</a></p>
+      </div>
+    </div>
   </section>
 </main>

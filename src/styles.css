@@ -149,3 +149,11 @@ header, footer, main {
     border-radius: 10px;
     overflow: hidden;
 }
+
+.form-group.focused label {
+    display: none;
+}
+
+.text-danger {
+    color: red;
+}
