@@ -1,73 +1,58 @@
-import { Component, AfterViewInit, Inject, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
-import { UserService } from '../login/user.service';
-import { Renderer2, ElementRef } from '@angular/core';
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, ReactiveFormsModule],
   selector: 'app-category-registro',
   templateUrl: './category-registro.component.html',
   styleUrls: ['./category-registro.component.css']
 })
-export class CategoryRegistroComponent  implements AfterViewInit {
+export class CategoryRegistroComponent {
+  miFormulario!: FormGroup;
   showSubMenu: boolean = false;
-  constructor(
-    private userService: UserService,
-    private renderer: Renderer2,
-    private el: ElementRef,
-    @Inject(PLATFORM_ID) private platformId: Object
+  formSubmitted: boolean = false;  // Variable para controlar el estado de envío del formulario
+
+  constructor(private fb: FormBuilder,
+              private router: Router
   ) {}
+  
+  ngOnInit(): void {
+    this.miFormulario = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      name: ['', Validators.required],
+      password: ['', [Validators.required, Validators.minLength(8)]],
+      confirmPassword: ['', Validators.required],
+      username: ['', Validators.required],
+      birthdate: ['', [Validators.required, this.minimumAgeValidator(16)]]
+    }, { validators: this.passwordMatchValidator });
+  }
+  
+  private passwordMatchValidator(form: FormGroup): ValidationErrors | null {
+    const password = form.get('password')?.value;
+    const confirmPassword = form.get('confirmPassword')?.value;
+    return password === confirmPassword ? null : { mismatch: true };
+  }
 
-  ngAfterViewInit(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      // Script del carrusel de imágenes
-      let currentSlide: number = 0;
-      const slides = this.el.nativeElement.querySelectorAll('.slide');
-      const totalSlides: number = slides.length;
+  private minimumAgeValidator(minAge: number) {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const birthdate = new Date(control.value);
+      const today = new Date();
+      const age = today.getFullYear() - birthdate.getFullYear();
+      const m = today.getMonth() - birthdate.getMonth();
+      return (age > minAge || (age === minAge && m >= 0)) ? null : { minAge: true };
+    };
+  }
 
-      if (totalSlides > 0) {
-        this.renderer.addClass(slides[currentSlide], 'active');
-
-        setInterval(() => {
-          this.renderer.removeClass(slides[currentSlide], 'active');
-          currentSlide = (currentSlide + 1) % totalSlides;
-          this.renderer.addClass(slides[currentSlide], 'active');
-        }, 3000);
-      }
-
-      // Manejar el formulario de registro
-      const formRegister = this.el.nativeElement.querySelector('.register-form form') as HTMLFormElement;
-
-      if (formRegister) {
-        this.renderer.listen(formRegister, 'submit', (event: Event) => {
-          event.preventDefault();
-          event.stopPropagation();
-
-          const email = (this.el.nativeElement.querySelector('#register-email') as HTMLInputElement).value;
-          const name = (this.el.nativeElement.querySelector('#register-name') as HTMLInputElement).value;
-          const password = (this.el.nativeElement.querySelector('#register-password') as HTMLInputElement).value;
-          const username = (this.el.nativeElement.querySelector('#register-username') as HTMLInputElement).value;
-          const birthdate = (this.el.nativeElement.querySelector('#register-birthdate') as HTMLInputElement).value;
-
-          console.log('Formulario de registro enviado:', { email, name, username, birthdate });
-
-          const registroExitoso = this.userService.registrarUsuario(email, name, password, username, birthdate);
-          if (registroExitoso) {
-            console.log('Registro exitoso:', { email, name, username, birthdate });
-            formRegister.reset();
-          } else {
-            console.log('Error en el registro.');
-          }
-        });
-      }
+  submitForm() {
+    this.formSubmitted = true;
+    if (this.miFormulario.valid){  
+      console.log("Resultado: " + this.miFormulario.get('name')!.value);
+      window.alert('Usuario registrado exitosamente');
+      this.router.navigate(['/index']);
     }
   }
 
-  toggleSubMenu(event: Event) {
-    event.preventDefault();  // Prevents the default action of the anchor tag
-    this.showSubMenu = !this.showSubMenu;
-  }
 }

@@ -13,10 +13,5 @@ export class CategoryFamiliarComponent implements AfterViewInit {
   showSubMenu: boolean = false;
   
   ngAfterViewInit(): void {}
-  
-  
-  toggleSubMenu(event: Event) {
-    event.preventDefault(); 
-    this.showSubMenu = !this.showSubMenu;
-  }
+
 }
