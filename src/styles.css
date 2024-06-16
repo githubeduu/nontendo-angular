@@ -80,7 +80,8 @@ main {
 
 
 .game {
-    display: block;
+    display: flex;
+    flex-direction: column; /* Por defecto, los productos se muestran verticalmente */
     width: 100%;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -88,7 +89,7 @@ main {
 }
 
 .game img {
-    width: 70%;
+    width: 100%;
     height: auto;
     border-radius: 5px;
     margin-bottom: 1rem;
@@ -112,9 +113,10 @@ main {
 .game .price {
     font-size: 1.25rem;
     font-weight: bold;
-    color: var(--secondary-color);
+    color: #000000;
     margin-bottom: 0;
 }
+
 
 @media (max-width: 768px) {
     .carousel-item img {
@@ -124,6 +126,14 @@ main {
     #categories ul {
         flex-direction: column;
         align-items: center;
+    }
+
+    #games {
+        display: block; /* Cambiamos el contenedor de los productos a bloque */
+    }
+
+    .game {
+        margin-bottom: 1rem; /* Añadimos espacio entre los productos */
     }
 
     article.game img {
