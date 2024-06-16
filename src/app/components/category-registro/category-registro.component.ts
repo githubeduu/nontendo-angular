@@ -55,7 +55,4 @@ export class CategoryRegistroComponent {
     }
   }
 
-  toggleSubMenu() {
-    this.showSubMenu = !this.showSubMenu;
-  }
 }

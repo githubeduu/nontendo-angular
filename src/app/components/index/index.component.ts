@@ -37,9 +37,4 @@ export class IndexComponent implements AfterViewInit {
       }
     }
   }
-
-  toggleSubMenu(event: Event) {
-    event.preventDefault();  // Prevents the default action of the anchor tag
-    this.showSubMenu = !this.showSubMenu;
-  }
 }

@@ -14,11 +14,7 @@ export class CategoryCooperativoComponent implements AfterViewInit {
   
   ngAfterViewInit(): void {}
   
-  
-  toggleSubMenu(event: Event) {
-    event.preventDefault(); 
-    this.showSubMenu = !this.showSubMenu;
-  }
+
 }
 
   
