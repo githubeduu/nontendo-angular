@@ -27,11 +27,11 @@ header {
 }
 
 footer {
-    background-color: var(--header-bg-color); /* Color del footer */
-    color: var(--header-text-color); /* Color del texto en el footer */
+    background-color: var(--header-bg-color);
+    color: var(--header-text-color);
     text-align: center;
     padding: 1rem;
-    margin-top: auto; /* Para que se empuje hacia el final del contenedor flex */
+    margin-top: auto;
 }
 
 nav.navbar {
@@ -43,8 +43,9 @@ main {
     flex: 1;
     padding: 1rem;
     margin-top: 80px;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1rem;
 }
 
 #categories ul {
@@ -71,39 +72,48 @@ main {
     transform: scale(1.1);
 }
 
-article.game {
-    margin-bottom: 2rem;
-    text-align: center;
+#games {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
 }
 
-article.game img {
-    width: 250px; /* Tamaño ajustado de la imagen */
-    height: 250px;
-    object-fit: cover;
+
+.game {
     display: block;
-    margin: 0 auto 1rem;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 1rem;
 }
 
-article.game h2 {
-    font-size: 2.75rem; /* Tamaño del nombre del juego */
-    margin: 0.5rem 0;
+.game img {
+    width: 70%;
+    height: auto;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+    transition: transform 0.3s;
 }
 
-article.game p {
-    font-size: 1rem; /* Tamaño de la descripción y otros textos */
-    margin: 0.5rem 0;
+.game img:hover {
+    transform: scale(1.1);
 }
 
-article.game p span {
-    font-weight: bold;
-    color: var(--primary-color);
+.game h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
 }
 
-article.game .price {
-    font-size: 1.5rem; /* Tamaño del precio */
+.game p {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+.game .price {
+    font-size: 1.25rem;
     font-weight: bold;
     color: var(--secondary-color);
-    margin: 0.5rem 0;
+    margin-bottom: 0;
 }
 
 @media (max-width: 768px) {
@@ -123,6 +133,10 @@ article.game .price {
 
     header img {
         width: 100px; /* Tamaño del logo para pantallas pequeñas */
+    }
+
+    main {
+        padding: 0.5rem; /* Ajuste de padding para pantallas pequeñas */
     }
 }
 
