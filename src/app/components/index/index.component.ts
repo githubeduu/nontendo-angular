@@ -11,7 +11,6 @@ import { RouterModule } from '@angular/router';
   styleUrls: ['./index.component.css']
 })
 export class IndexComponent implements AfterViewInit {
-  showSubMenu: boolean = false;
 
   constructor(
     private renderer: Renderer2,
