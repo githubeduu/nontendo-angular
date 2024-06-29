@@ -18,17 +18,13 @@
               <li><a class="dropdown-item" [routerLink]="['/categoryAventura']">Aventura</a></li>
               <li><a class="dropdown-item" [routerLink]="['/categoryCooperativo']">Cooperativo</a></li>
               <li><a class="dropdown-item" [routerLink]="['/categoryEstrategia']">Estrategia</a></li>
-              <li><a class="dropdown-item" [routerLink]="['/categoryFamiliar']">Familiar</a></li>
+              <li><a class="dropdown-item" [routerLink]="['/categoryFamiliar']">Familiar</a></li>         
             </ul>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/categoryRegistro">Registro Usuario</a>
-          </li>       
+            <a class="nav-link" [routerLink]="['/categoryRegistro']">Registro Usuario</a>
+          </li>             
         </ul>
-        <!-- <form class="d-flex">
-          <input class="form-control me-2" type="search" placeholder="Busqueda" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Busqueda</button>
-        </form> -->
       </div>
     </div>
   </nav>

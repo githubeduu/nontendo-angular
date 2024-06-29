@@ -9,9 +9,6 @@ import { RouterModule } from '@angular/router';
   templateUrl: './category-familiar.component.html',
   styleUrl: './category-familiar.component.css'
 })
-export class CategoryFamiliarComponent implements AfterViewInit {
-  showSubMenu: boolean = false;
-  
-  ngAfterViewInit(): void {}
+export class CategoryFamiliarComponent {
 
 }

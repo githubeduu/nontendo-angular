@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 @Component({
@@ -9,10 +9,7 @@ import { RouterModule } from '@angular/router';
   templateUrl: './category-estrategia.component.html',
   styleUrl: './category-estrategia.component.css'
 })
-export class CategoryEstrategiaComponent implements AfterViewInit {
-  showSubMenu: boolean = false;
-  
-  ngAfterViewInit(): void {}
+export class CategoryEstrategiaComponent {
   
 }
 
